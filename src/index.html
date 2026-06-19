@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cruzeiro Widget</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="widget-container">
+        <header>
+            <img src="https://www.cruzeiro.com.br/logo192.png" alt="Cruzeiro" class="cruzeiro-logo" />
+            <h1>Próximos Jogos</h1>
+        </header>
+        <main id="matches-container">
+            <div class="loading">Buscando jogos...</div>
+        </main>
+        <footer id="tickets-container" class="tickets-section">
+            <div class="loading">Buscando ingressos...</div>
+        </footer>
+    </div>
+    <script src="renderer-jogos.js"></script>
+    <script src="renderer-ingressos.js"></script>
+</body>
+</html>
