@@ -3,6 +3,12 @@ const path = require('path');
 const { getNextMatches } = require('./scraper-jogos');
 const { getTicketsStatus } = require('./scraper-ingressos');
 
+if (!app.isPackaged) {
+    require('electron-reload')(__dirname, {
+        electron: path.join(__dirname, '..', 'node_modules', '.bin', 'electron')
+    });
+}
+
 let mainWindow;
 
 function createWindow() {

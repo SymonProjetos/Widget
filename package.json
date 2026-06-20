@@ -18,7 +18,8 @@
   },
   "devDependencies": {
     "electron": "^42.4.1",
-    "electron-builder": "^26.15.3"
+    "electron-builder": "^26.15.3",
+    "electron-reload": "^2.0.0-alpha.1"
   },
   "build": {
     "appId": "com.cruzeiro.widget",
