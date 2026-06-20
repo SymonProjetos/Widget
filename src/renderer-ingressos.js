@@ -17,8 +17,7 @@ window.electronAPI.onUpdateTickets((event, tickets) => {
             <div class="tickets-unavailable">
                 <div class="tickets-icon">🎫</div>
                 <div class="tickets-text">
-                    <strong>Ingressos Esgotados</strong>
-                    <span>ou não disponíveis</span>
+                    <strong>Não disponíveis</strong>
                 </div>
             </div>
         `;
