@@ -17,15 +17,15 @@
     "cheerio": "^1.2.0"
   },
   "devDependencies": {
-    "electron": "^42.4.1",
-    "electron-builder": "^26.15.3",
+    "electron": "^33.2.0",
+    "electron-builder": "^24.13.3",
     "electron-reload": "^2.0.0-alpha.1"
   },
   "build": {
     "appId": "com.cruzeiro.widget",
+    "asar": false,
     "win": {
-      "target": "nsis",
-      "icon": "build/icon.ico"
+      "target": "nsis"
     }
   }
 }

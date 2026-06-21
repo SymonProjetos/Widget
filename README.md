@@ -46,6 +46,18 @@ npm run build
 
 O instalador será gerado na pasta `dist/` (com base na configuração do `electron-builder`).
 
+### Alternativa (Caso a Build falhe no Windows)
+
+Devido a políticas de segurança do Windows (Windows Defender/SmartScreen) com executáveis não assinados digitalmente gerados pelo `electron-builder`, o `.exe` gerado pode sofrer um "crash" e fechar imediatamente na inicialização (erro `STATUS_BREAKPOINT`). Caso isso ocorra, você pode usar a alternativa silenciosa via script VBScript.
+
+**Para iniciar silenciosamente usando o código-fonte:**
+Dê dois cliques no arquivo `start-widget.vbs` localizado na raiz do projeto. O widget abrirá perfeitamente sem mostrar nenhuma janela preta de terminal (cmd).
+
+**Para configurar o widget na inicialização do Windows automaticamente:**
+1. Clique com o botão direito no arquivo `start-widget.vbs` e selecione **"Criar atalho"**.
+2. Aperte as teclas `Win + R` no seu teclado, digite `shell:startup` e pressione Enter.
+3. Mova o atalho criado (do passo 1) para dentro dessa pasta que foi aberta. Pronto! O widget iniciará de forma totalmente invisível sempre que o seu PC ligar.
+
 ## 📁 Estrutura do Projeto
 
 - `src/main.js`: Arquivo principal do processo do Electron, gerencia o ciclo de vida da janela e agendamento de atualizações.
