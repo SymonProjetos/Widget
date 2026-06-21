@@ -36,6 +36,8 @@ function getNextMatches(count = 10) {
                                 'AGO': 'Atlético-GO', 'BOC': 'Boca Juniors', 'CAT': 'U. Católica'
                             };
 
+                            let lastParsedIdx = -1;
+
                             for (let i = 0; i < texts.length; i++) {
                                 if (texts[i] === ':') {
                                     let team1Index = i - 1;
@@ -54,44 +56,48 @@ function getNextMatches(count = 10) {
                                     let team1 = texts[team1Index];
                                     let team2 = texts[team2Index];
 
-                                    if (isFutureMatch && (team1 === 'CRU' || team2 === 'CRU')) {
-                                        let dateStr = 'A Definir';
-                                        let timeStr = '--:--';
-                                        let competition = 'Campeonato';
+                                    // Data e hora agora ficam APÓS o time 2
+                                    let dateIdx = team2Index + 1;
+                                    let timeIdx = team2Index + 2;
+                                    
+                                    let dateStr = texts[dateIdx];
+                                    let timeStr = '--:--';
+                                    let matchEndIdx = dateIdx;
 
-                                        let t10 = texts[team1Index - 10];
-                                        let t9 = texts[team1Index - 9];
-                                        let t8 = texts[team1Index - 8];
-                                        let t7 = texts[team1Index - 7];
-                                        let t6 = texts[team1Index - 6];
-                                        let t5 = texts[team1Index - 5];
-                                        let t4 = texts[team1Index - 4];
-                                        let t3 = texts[team1Index - 3];
-                                        let t2 = texts[team1Index - 2];
-                                        let t1 = texts[team1Index - 1];
+                                    const isTimeString = (s) => s && (/^\\d{2}:\\d{2}$/.test(s) || s === 'Data a definir');
+                                    const isDateString = (s) => s && (s === 'Data a definir' || /^\\d{2}\\/\\d{2}$/.test(s) || /^[a-z]+$/i.test(s) || /^\\d{2} de [a-z]+$/i.test(s));
+                                    
+                                    if (isTimeString(texts[timeIdx])) {
+                                        timeStr = texts[timeIdx];
+                                        matchEndIdx = timeIdx;
+                                    }
+                                    
+                                    if (!isDateString(dateStr)) {
+                                        dateStr = 'A Definir';
+                                    } else if (dateStr === 'Data a definir') {
+                                        dateStr = 'A Definir';
+                                    }
 
-                                        const isDate = (s) => s && (s === 'Data a definir' || /^\\d{2}\\/\\d{2}$/.test(s));
-                                        const isTime = (s) => s && (s === 'Data a definir' || /^\\d{2}:\\d{2}$/.test(s));
+                                    if (timeStr === 'Data a definir') {
+                                        timeStr = '--:--';
+                                    }
 
-                                        if (isDate(t5) && isTime(t4)) {
-                                            dateStr = t5;
-                                            timeStr = t4;
-                                            competition = t3 + (t1 ? ' - ' + t1 : '');
-                                        } else if (isDate(t4) && isTime(t3)) {
-                                            dateStr = t4;
-                                            timeStr = t3;
-                                            competition = t2;
-                                        } else if (t4 === 'Data a definir') {
-                                            dateStr = t4;
-                                            competition = t3 + (t1 ? ' - ' + t1 : '');
-                                        } else if (t3 === 'Data a definir') {
-                                            dateStr = t3;
-                                            competition = t2;
+                                    // Competição e Estádio ficam ANTES do time 1 (limitados pelo final do jogo anterior)
+                                    let metadataStart = lastParsedIdx !== -1 ? lastParsedIdx + 1 : Math.max(0, team1Index - 3);
+                                    let metadataStrings = [];
+                                    
+                                    for (let j = metadataStart; j < team1Index; j++) {
+                                        let s = texts[j];
+                                        if (s && s !== 'Cruzeiro Esporte Clube' && !s.includes('JavaScript')) {
+                                            metadataStrings.push(s);
                                         }
+                                    }
+                                    
+                                    let competition = metadataStrings.join(' - ') || 'Campeonato';
 
-                                        if (dateStr === 'Data a definir') dateStr = 'A Definir';
-                                        if (timeStr === 'Data a definir') timeStr = '--:--';
+                                    lastParsedIdx = matchEndIdx;
 
+                                    if (isFutureMatch && (team1 === 'CRU' || team2 === 'CRU')) {
                                         let homeTeam = team1 === 'CRU' ? 'Cruzeiro' : (teamMap[team1] || team1);
                                         let awayTeam = team2 === 'CRU' ? 'Cruzeiro' : (teamMap[team2] || team2);
 
@@ -100,7 +106,7 @@ function getNextMatches(count = 10) {
                                             awayTeam,
                                             date: dateStr,
                                             time: timeStr,
-                                            competition: competition || 'Campeonato'
+                                            competition: competition
                                         });
                                     }
                                 }

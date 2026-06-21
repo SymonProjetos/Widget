@@ -1,6 +1,5 @@
 :root {
     --primary-color: #2F529E;
-    /* Azul Cruzeiro */
     --text-light: #2F529E;
     --text-dim: #2F529E;
     --bg-glass: #FFFFFF;
@@ -12,12 +11,10 @@ body {
     padding: 0;
     font-family: 'Inter', sans-serif;
     color: var(--text-light);
-    /* Permite arrastar a janela sem bordas */
     -webkit-app-region: drag;
     overflow: hidden;
 }
 
-/* Evita que clicar em um card arraste a janela */
 .match-card {
     -webkit-app-region: no-drag;
 }
@@ -104,6 +101,7 @@ main::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
     margin-bottom: 14px;
     font-size: 11px;
     text-transform: uppercase;
@@ -113,13 +111,17 @@ main::-webkit-scrollbar-thumb {
 .competition {
     color: #2F529E;
     font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 60%;
-    border-radius: 4px;
+    white-space: normal;
+    text-align: center;
+    max-width: 75%;
+    border-radius: 6px;
     border: solid 1px #2F529E;
-    padding: 3px;
+    padding: 4px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    line-height: 1.2;
 }
 
 .match-teams {
@@ -144,7 +146,16 @@ main::-webkit-scrollbar-thumb {
     color: #FFFFFF;
     letter-spacing: 0.5px;
     border-radius: 10px;
-    padding: 5px;
+    padding: 4px 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    min-height: 30px;
+    line-height: 1.2;
+    max-width: 105px;
+    box-sizing: border-box;
 }
 
 .cruzeiro {
@@ -152,8 +163,17 @@ main::-webkit-scrollbar-thumb {
     color: #FFFFFF;
     font-weight: 1200;
     font-size: 20px;
-    padding: 5px;
+    padding: 4px 8px;
     border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    min-height: 48px;
+    line-height: 1.2;
+    max-width: 130px;
+    box-sizing: border-box;
 }
 
 .vs {
@@ -183,6 +203,7 @@ main::-webkit-scrollbar-thumb {
     padding: 4px 12px;
     border-radius: 12px;
     border: 1px solid rgba(107, 181, 255, 0.2);
+    height: 20px;
 }
 
 .icon {
@@ -198,7 +219,7 @@ main::-webkit-scrollbar-thumb {
 }
 
 .badge-home {
-    background: #2e1cd3;
+    background: #2F529E;
     color: #FFFFFF;
     border: 1px solid rgba(107, 181, 255, 0.3);
 }
@@ -215,6 +236,7 @@ main::-webkit-scrollbar-thumb {
     margin-top: 10px;
     display: flex;
     justify-content: center;
+    height: 12vh;
 }
 
 .tickets-available {

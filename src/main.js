@@ -13,7 +13,7 @@ let mainWindow;
 let lastTicketStatus = false;
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 350,
+        width: 400,
         height: 870,
         transparent: true,
         frame: false,
@@ -33,7 +33,7 @@ function createWindow() {
     const { screen } = require('electron');
     const primaryDisplay = screen.getPrimaryDisplay();
     const { width, height } = primaryDisplay.workAreaSize;
-    mainWindow.setPosition(width - 380, 50);
+    mainWindow.setPosition(width - 410, 50);
 
 
     mainWindow.webContents.on('did-finish-load', () => {
