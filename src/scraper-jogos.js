@@ -1,6 +1,6 @@
 const { BrowserWindow } = require('electron');
 
-function getNextMatches(count = 5) {
+function getNextMatches(count = 10) {
     return new Promise((resolve) => {
         let win = new BrowserWindow({
             show: false,
@@ -55,16 +55,42 @@ function getNextMatches(count = 5) {
                                     let team2 = texts[team2Index];
 
                                     if (isFutureMatch && (team1 === 'CRU' || team2 === 'CRU')) {
-                                        let stadium = texts[team1Index - 1];
-                                        let competition = texts[team1Index - 2];
-                                        let timeStr = texts[team1Index - 3];
-                                        let dateStr = texts[team1Index - 4];
+                                        let dateStr = 'A Definir';
+                                        let timeStr = '--:--';
+                                        let competition = 'Campeonato';
 
-                                        if (competition === 'Data a definir' || timeStr === 'Data a definir') {
-                                            dateStr = 'A Definir';
-                                            timeStr = '--:--';
-                                            competition = texts[team1Index - 2] === 'Data a definir' ? texts[team1Index - 3] : texts[team1Index - 2];
+                                        let t10 = texts[team1Index - 10];
+                                        let t9 = texts[team1Index - 9];
+                                        let t8 = texts[team1Index - 8];
+                                        let t7 = texts[team1Index - 7];
+                                        let t6 = texts[team1Index - 6];
+                                        let t5 = texts[team1Index - 5];
+                                        let t4 = texts[team1Index - 4];
+                                        let t3 = texts[team1Index - 3];
+                                        let t2 = texts[team1Index - 2];
+                                        let t1 = texts[team1Index - 1];
+
+                                        const isDate = (s) => s && (s === 'Data a definir' || /^\\d{2}\\/\\d{2}$/.test(s));
+                                        const isTime = (s) => s && (s === 'Data a definir' || /^\\d{2}:\\d{2}$/.test(s));
+
+                                        if (isDate(t5) && isTime(t4)) {
+                                            dateStr = t5;
+                                            timeStr = t4;
+                                            competition = t3 + (t1 ? ' - ' + t1 : '');
+                                        } else if (isDate(t4) && isTime(t3)) {
+                                            dateStr = t4;
+                                            timeStr = t3;
+                                            competition = t2;
+                                        } else if (t4 === 'Data a definir') {
+                                            dateStr = t4;
+                                            competition = t3 + (t1 ? ' - ' + t1 : '');
+                                        } else if (t3 === 'Data a definir') {
+                                            dateStr = t3;
+                                            competition = t2;
                                         }
+
+                                        if (dateStr === 'Data a definir') dateStr = 'A Definir';
+                                        if (timeStr === 'Data a definir') timeStr = '--:--';
 
                                         let homeTeam = team1 === 'CRU' ? 'Cruzeiro' : (teamMap[team1] || team1);
                                         let awayTeam = team2 === 'CRU' ? 'Cruzeiro' : (teamMap[team2] || team2);

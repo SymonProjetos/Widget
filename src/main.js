@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, Notification } = require('electron');
 const path = require('path');
 const { getNextMatches } = require('./scraper-jogos');
 const { getTicketsStatus } = require('./scraper-ingressos');
@@ -10,11 +10,11 @@ if (!app.isPackaged) {
 }
 
 let mainWindow;
-
+let lastTicketStatus = false;
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 350,
-        height: 650,
+        height: 870,
         transparent: true,
         frame: false,
         resizable: false,
@@ -38,17 +38,31 @@ function createWindow() {
 
     mainWindow.webContents.on('did-finish-load', () => {
         fetchAndSendMatches();
+        fetchAndSendTickets();
     });
 }
 
 async function fetchAndSendMatches() {
-    const [matches, tickets] = await Promise.all([
-        getNextMatches(5),
-        getTicketsStatus()
-    ]);
+    const matches = await getNextMatches(10);
     if (mainWindow) {
         mainWindow.webContents.send('update-matches', matches);
+    }
+}
+
+async function fetchAndSendTickets() {
+    const tickets = await getTicketsStatus();
+    if (mainWindow) {
         mainWindow.webContents.send('update-tickets', tickets);
+    }
+
+    if (tickets && tickets.available && !lastTicketStatus) {
+        new Notification({
+            title: 'Ingressos Disponíveis!',
+            body: 'Há ingressos disponíveis para o Cruzeiro.'
+        }).show();
+    }
+    if (tickets && !tickets.error) {
+        lastTicketStatus = tickets.available;
     }
 }
 
@@ -62,9 +76,8 @@ app.whenReady().then(() => {
             path: app.getPath("exe"),
         });
     }
-
-
     setInterval(fetchAndSendMatches, 6 * 60 * 60 * 1000);
+    setInterval(fetchAndSendTickets, 1 * 60 * 60 * 1000);
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {

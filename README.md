@@ -4,7 +4,7 @@ Um widget de área de trabalho construído com [Electron](https://www.electronjs
 
 ## 🌟 Funcionalidades
 
-- **Próximos Jogos**: Exibe os próximos 5 jogos do Cruzeiro com informações detalhadas (adversário, data, campeonato, etc.).
+- **Próximos Jogos**: Exibe os próximos 10 jogos do Cruzeiro com informações detalhadas (adversário, data, campeonato, etc.).
 - **Status de Ingressos**: Mostra a disponibilidade de ingressos para os próximos jogos (informação extraída diretamente do site [Sócio 5 Estrelas](https://socio.cruzeiro.com.br/)).
 - **Widget Discreto**: Janela transparente, sem bordas, que se integra perfeitamente à área de trabalho.
 - **Auto-Inicialização**: Configurado para iniciar automaticamente ao fazer login no sistema (quando empacotado).
