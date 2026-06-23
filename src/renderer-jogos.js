@@ -1,4 +1,5 @@
 window.electronAPI.onUpdateMatches((event, matches) => {
+    if (typeof notifyUpdateFinished === 'function') notifyUpdateFinished();
     const container = document.getElementById('matches-container');
     container.innerHTML = '';
 

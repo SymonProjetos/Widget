@@ -11,7 +11,8 @@
     <div class="widget-container">
         <header>
             <img src="https://www.cruzeiro.com.br/logo192.png" alt="Cruzeiro" class="cruzeiro-logo" />
-            <h1>Próximos Jogos</h1>
+            <h1 style="flex: 1;">Próximos Jogos</h1>
+            <button class="refresh-btn" onclick="handleRefresh()" id="refresh-btn" title="Atualizar Dados">↻</button>
         </header>
         <main id="matches-container">
             <div class="loading">Buscando jogos...</div>
@@ -20,6 +21,24 @@
             <div class="loading">Buscando ingressos...</div>
         </footer>
     </div>
+    <script>
+        let updatesPending = 0;
+        function handleRefresh() {
+            if (updatesPending > 0) return;
+            updatesPending = 2;
+            document.getElementById('refresh-btn').classList.add('spinning');
+            document.getElementById('matches-container').innerHTML = '<div class="loading">Buscando jogos...</div>';
+            document.getElementById('tickets-container').innerHTML = '<div class="loading">Buscando ingressos...</div>';
+            window.electronAPI.forceRefresh();
+        }
+        function notifyUpdateFinished() {
+            if (updatesPending > 0) updatesPending--;
+            if (updatesPending === 0) {
+                const btn = document.getElementById('refresh-btn');
+                if (btn) btn.classList.remove('spinning');
+            }
+        }
+    </script>
     <script src="renderer-jogos.js"></script>
     <script src="renderer-ingressos.js"></script>
 </body>

@@ -1,4 +1,5 @@
 window.electronAPI.onUpdateTickets((event, tickets) => {
+    if (typeof notifyUpdateFinished === 'function') notifyUpdateFinished();
     const container = document.getElementById('tickets-container');
     container.innerHTML = '';
 

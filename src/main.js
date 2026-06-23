@@ -91,3 +91,8 @@ app.on('window-all-closed', () => {
         app.quit();
     }
 });
+
+ipcMain.on('force-refresh', () => {
+    fetchAndSendMatches();
+    fetchAndSendTickets();
+});

@@ -42,6 +42,44 @@ header {
     border-bottom: 1px solid #2F529E;
 }
 
+.refresh-btn {
+    background: transparent;
+    border: 1px solid #2F529E;
+    color: #2F529E;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    outline: none;
+    padding: 0;
+    -webkit-app-region: no-drag;
+}
+
+.refresh-btn:hover {
+    background: rgba(47, 82, 158, 0.1);
+    transform: rotate(180deg);
+}
+
+.refresh-btn:active {
+    transform: rotate(360deg) scale(0.95);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
 .cruzeiro-logo {
     width: 44px;
     height: 44px;
